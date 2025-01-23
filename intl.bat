@@ -12,10 +12,12 @@ powershell -Command "Set-WinSystemLocale en-US"
 powershell -Command "Set-Culture en-US"
 powershell -Command "Set-WinHomeLocation -GeoId 244"
 
-REM Copy settings to system accounts
-echo Applying language settings to system accounts...
-control intl.cpl
+REM Automatically copy settings to Welcome screen and System accounts
+echo Applying language settings to Welcome screen and system accounts...
+reg add "HKEY_CURRENT_USER\Control Panel\International\Geo" /v Nation /t REG_SZ /d 244 /f
+reg add "HKEY_CURRENT_USER\Control Panel\International" /v Locale /t REG_SZ /d 00000409 /f
+reg add "HKEY_USERS\.DEFAULT\Control Panel\International" /v Locale /t REG_SZ /d 00000409 /f
 
-REM Notify user to restart the system
+REM Notify user
 echo Language settings applied. Please restart your computer to apply changes.
 pause
